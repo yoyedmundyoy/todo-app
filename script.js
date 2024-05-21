@@ -6,6 +6,12 @@ function submitEventListener()
     form.addEventListener("submit", submitForm);
 }
 
+function clearEventListener()
+{
+    const button = document.getElementById("clear");
+    button.addEventListener("click", clearNotes);
+}
+
 function toggleStrikeThrough(event)
 {
     const checkbox = event.currentTarget;
@@ -56,8 +62,16 @@ function submitForm(event)
         // Increment id value
         id++;
     }
-    
+}
+
+function clearNotes()
+{
+    const list = document.getElementById("list");
+    while (list.firstChild)
+    {
+        list.removeChild(list.lastChild)
+    }
 }
 
 document.addEventListener("DOMContentLoaded", submitEventListener);
-
+document.addEventListener("DOMContentLoaded", clearEventListener);
