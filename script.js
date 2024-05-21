@@ -8,7 +8,15 @@ function submitEventListener()
 
 function toggleStrikeThrough(event)
 {
-    event.currentTarget.classList.toggle("done");
+    const checkbox = event.currentTarget;
+    const textElement = checkbox.nextElementSibling;
+
+    textElement.classList.toggle("done");
+}
+
+function deleteEntry(event)
+{
+    event.currentTarget.parentNode.remove();
 }
 
 function submitForm(event)
@@ -21,12 +29,31 @@ function submitForm(event)
     if (input[0][1] !== "")
     {
         const list = document.getElementById("list");
-        const node = document.createElement("p");
-        node.setAttribute("id", id);
-        node.setAttribute("class", "");
-        node.appendChild(document.createTextNode(input[0][1]));
-        list.appendChild(node);
-        document.getElementById(id).addEventListener("click", toggleStrikeThrough);
+
+        // Create container
+        const container = document.createElement("div");
+
+        // Create checkbox element
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = `checkbox-${id}`;
+        checkbox.addEventListener("change", toggleStrikeThrough);
+
+        // Create label element for checkbox
+        const label = document.createElement("label");
+        label.setAttribute("for", `checkbox-${id}`);
+        label.textContent = input[0][1];
+    
+        const remove = document.createElement("button");
+        remove.textContent = "x";
+        remove.addEventListener("click", deleteEntry);
+
+        container.appendChild(checkbox);
+        container.appendChild(label);
+        container.appendChild(remove);
+        list.appendChild(container);
+
+        // Increment id value
         id++;
     }
     
